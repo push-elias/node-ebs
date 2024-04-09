@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: [ ubuntu-latest ]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
@@ -17,8 +17,12 @@ jobs:
           node-version: 20
       - name: Install Dependencies
         run: npm install
-      - name: Genrate Deployment Package
-        run: zip -r build.zip .
+      - name: Generate Deployment Package
+        run: |
+          CURRENT_TIMESTAMP=$(date +"%Y%m%d%H%M%S")
+          VERSION_LABEL="${CURRENT_TIMESTAMP}_${GITHUB_SHA}"
+          echo "::set-env name=VERSION_LABEL::$VERSION_LABEL"
+          zip -r build.zip .
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v21
         with:
@@ -26,6 +30,6 @@ jobs:
           aws_secret_key: 'hqcGKG454vbq1PtkfpqQivjLxg/i0CXZaY7zo88W'
           application_name: 'test-node'
           environment_name: 'Test-node-env'
-          version_label: ${{ github.sha }}
+          version_label: ${{ env.VERSION_LABEL }}
           region: eu-north-1
           deployment_package: build.zip
