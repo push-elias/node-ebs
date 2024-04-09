@@ -1,4 +1,4 @@
-name: nima-CICD
+name: test-node-CICD
 
 on:
   push:
@@ -24,8 +24,8 @@ jobs:
         with:
           aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: 'nima'
-          environment_name: 'nima-env'
+          application_name: 'test-node'
+          environment_name: 'test-node-env'
           version_label: ${{ github.sha }}
           region: af-south-1
           deployment_package: build.zip
