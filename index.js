@@ -9,7 +9,7 @@ app.use(bodyParser.json());
 
 // Endpoint 1: Hello World
 app.get('/hello', (req, res) => {
-  res.send('Hello, World!');
+  res.send('Hello, World!, I am F******cking tired');
 });
 
 // Endpoint 2: Echo
